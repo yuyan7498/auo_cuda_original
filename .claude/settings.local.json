@@ -4,7 +4,23 @@
       "Bash(grep -E \"\\\\.\\(bmp|png|jpg|jpeg|gif|tiff|tif|raw|ico|BMP|PNG|JPG|JPEG|GIF|TIFF|TIF|RAW|ICO\\)$\")",
       "Bash(grep -E \"\\\\.\\(dll|exe|lib|obj|pdb|pch|cache|suo|user|log|tlog|res|asm|deps|bi|lastbuildstate|unsuccessfulbuild\\)$\")",
       "Bash(git add *)",
-      "Bash(grep -E \"\\\\.\\(bmp|png|jpg|jpeg|tif|tiff|raw|dll|exe|pdb|obj|pch|suo|cache|log|tlog|resources|nupkg\\)$\")"
+      "Bash(grep -E \"\\\\.\\(bmp|png|jpg|jpeg|tif|tiff|raw|dll|exe|pdb|obj|pch|suo|cache|log|tlog|resources|nupkg\\)$\")",
+      "Bash(mkdir -p \"C:/Users/toby/Documents/auo_cuda_original/CUDA_OPT\")",
+      "Bash(cp -r \"C:/Users/toby/Documents/auo_cuda_original/CUDA_FFT_DLL - 1buffer - mutex/.\" \"C:/Users/toby/Documents/auo_cuda_original/CUDA_OPT/\")",
+      "Bash(command -v nvcc)",
+      "Bash(\"/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.1/bin/nvcc\" -c Kernel.cu -o /tmp/Kernel.obj -I\"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.1/include\" -std=c++14 -arch=sm_75 -Xcompiler /wd4819)",
+      "Read(//c/Program Files/Microsoft Visual Studio//**)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft Visual Studio//**)",
+      "Bash(export PATH=\"/c/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.29.30133/bin/HostX64/x64:$PATH\")",
+      "PowerShell($env:PATH = \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\VC\\\\Tools\\\\MSVC\\\\14.29.30133\\\\bin\\\\HostX64\\\\x64;\" + $env:PATH; Set-Location \"C:\\\\Users\\\\toby\\\\Documents\\\\auo_cuda_original\\\\CUDA_OPT\\\\CudaCore\\\\CudaCore\"; & \"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v11.1\\\\bin\\\\nvcc.exe\" -c Kernel.cu -o \"$env:TEMP\\\\Kernel.obj\" -I\"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v11.1\\\\include\" -std=c++14 -arch=sm_75 2>&1 | Select-Object -First 80)",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\toby\\\\Documents\\\\auo_cuda_original\\\\CUDA_OPT\\\\CudaCore\\\\CudaCore\"; & \"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v11.1\\\\bin\\\\nvcc.exe\" -c Kernel.cu -o \"$env:TEMP\\\\Kernel.obj\" -ccbin \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\VC\\\\Tools\\\\MSVC\\\\14.29.30133\\\\bin\\\\HostX64\\\\x64\" -I\"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v11.1\\\\include\" -arch=sm_75 2>&1 | Select-Object -First 40)",
+      "PowerShell($env:INCLUDE = \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\VC\\\\Tools\\\\MSVC\\\\14.29.30133\\\\include;C:\\\\Program Files \\(x86\\)\\\\Windows Kits\\\\10\\\\Include\\\\10.0.22621.0\\\\ucrt;C:\\\\Program Files \\(x86\\)\\\\Windows Kits\\\\10\\\\Include\\\\10.0.22621.0\\\\um;C:\\\\Program Files \\(x86\\)\\\\Windows Kits\\\\10\\\\Include\\\\10.0.22621.0\\\\shared\"; $env:LIB = \"\"; Set-Location \"C:\\\\Users\\\\toby\\\\Documents\\\\auo_cuda_original\\\\CUDA_OPT\\\\CudaCore\\\\CudaCore\"; & \"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v11.1\\\\bin\\\\nvcc.exe\" -c Kernel.cu -o \"$env:TEMP\\\\Kernel.obj\" -ccbin \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\VC\\\\Tools\\\\MSVC\\\\14.29.30133\\\\bin\\\\HostX64\\\\x64\" -I\"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v11.1\\\\include\" -arch=sm_75 2>&1 | Select-Object -First 40)",
+      "PowerShell(Set-Location \"C:\\\\Users\\\\toby\\\\Documents\\\\auo_cuda_original\\\\CUDA_OPT\\\\CudaCore\\\\CudaCore\"; & \"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v13.2\\\\bin\\\\nvcc.exe\" -c Kernel.cu -o \"$env:TEMP\\\\Kernel.obj\" -I\"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v13.2\\\\include\" -arch=sm_75 -std=c++17 2>&1 | Select-Object -First 40)",
+      "PowerShell($env:PATH = \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\VC\\\\Tools\\\\MSVC\\\\14.44.35207\\\\bin\\\\HostX64\\\\x64;\" + $env:PATH; Set-Location \"C:\\\\Users\\\\toby\\\\Documents\\\\auo_cuda_original\\\\CUDA_OPT\\\\CudaCore\\\\CudaCore\"; & \"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v13.2\\\\bin\\\\nvcc.exe\" -c Kernel.cu -o \"$env:TEMP\\\\Kernel.obj\" -I\"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v13.2\\\\include\" -arch=sm_75 -std=c++17 2>&1 | Select-Object -First 40)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell(Get-ChildItem env: | Where-Object { $_.Name -match \"VC|MSVC|VS\" } | Format-Table -AutoSize)",
+      "PowerShell(Get-Item *)"
     ]
   }
 }
