@@ -1,0 +1,72 @@
+# ===== 圖片檔案 =====
+*.bmp
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+*.raw
+*.BMP
+*.PNG
+*.JPG
+*.JPEG
+*.TIF
+*.TIFF
+*.RAW
+
+# ===== Visual Studio 編譯產物 =====
+[Dd]ebug/
+[Rr]elease/
+x64/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+
+# ===== VS .vs 資料夾 =====
+.vs/
+
+# ===== IntelliSense 快取 =====
+ipch/
+*.ipch
+
+# ===== 編譯中間檔 =====
+*.obj
+*.pch
+*.pdb
+*.ilk
+*.res
+*.asm
+
+# ===== 編譯 log =====
+*.log
+*.tlog
+*.cache
+*.Cache
+*.deps
+*.bi
+*.lastbuildstate
+unsuccessfulbuild
+
+# ===== CUDA 編譯產物 =====
+*.cubin
+*.ptx
+*.fatbin
+
+# ===== 執行檔與程式庫 =====
+*.exe
+*.dll
+*.lib
+*.exp
+
+# ===== NuGet 套件 (可透過 restore 取回) =====
+packages/
+*.nupkg
+*.p7s
+
+# ===== .NET 資源檔 =====
+*.resources

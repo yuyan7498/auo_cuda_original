@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(bmp|png|jpg|jpeg|gif|tiff|tif|raw|ico|BMP|PNG|JPG|JPEG|GIF|TIFF|TIF|RAW|ICO\\)$\")",
+      "Bash(grep -E \"\\\\.\\(dll|exe|lib|obj|pdb|pch|cache|suo|user|log|tlog|res|asm|deps|bi|lastbuildstate|unsuccessfulbuild\\)$\")",
+      "Bash(git add *)",
+      "Bash(grep -E \"\\\\.\\(bmp|png|jpg|jpeg|tif|tiff|raw|dll|exe|pdb|obj|pch|suo|cache|log|tlog|resources|nupkg\\)$\")"
+    ]
+  }
+}
