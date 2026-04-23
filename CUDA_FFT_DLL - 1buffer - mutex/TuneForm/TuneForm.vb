@@ -289,8 +289,14 @@ Public Class TuneForm
 
             If Not Me.m_RunProcCycle Then Exit While
 
+            Dim TotalWatch As New Stopwatch
+            Dim FFTWatch As New Stopwatch
+            TotalWatch.Start()
+
+            FFTWatch.Start()
             Me.m_CudaCore.CudaSetFFTConfig(192, Me.m_mImgSizeX, Me.m_mImgSizeY, Me.m_ParametetRecipe.ImageScaleValue, Me.m_ParametetRecipe.BinaryThreshold, Me.m_ParametetRecipe.MaskSizeX, Me.m_ParametetRecipe.MaskSizeY, False)
             Me.m_CudaCore.CudaExcuteFFT2D(Me.m_ArySource, Me.m_AryIFFT, Me.m_AryFFT, Me.m_AryBinarize, Me.m_AryMask)
+            FFTWatch.Stop()
 
             MbufPut(Me.m_mImgFFT, Me.m_AryFFT)
             Me.ViewerChange(Me.Viewer2, Me.m_mImgFFT)
@@ -317,10 +323,17 @@ Public Class TuneForm
             MbufFree(tmp_IFFTSave)
             tmp_IFFTSave = M_NULL
 
+            TotalWatch.Stop()
+
+            Dim totalMs As Long = TotalWatch.ElapsedMilliseconds
+            Dim fftMs As Long = FFTWatch.ElapsedMilliseconds
+
             Me.Invoke(Sub()
                           btn_TestImage.Enabled = True
                           btn_LoadImage.Enabled = True
                           Ppg_ParameterRecipe.Enabled = True
+                          lbl_TotalTime.Text = String.Format("總時間: {0} ms", totalMs)
+                          lbl_FFTTime.Text = String.Format("FFT時間: {0} ms", fftMs)
                       End Sub)
 
         End While

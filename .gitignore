@@ -1,4 +1,4 @@
-# ===== 圖片檔案 =====
+# ===== 圖片檔案 (預設忽略；避免 source 大圖上傳 GitHub) =====
 *.bmp
 *.png
 *.jpg
@@ -13,6 +13,10 @@
 *.TIF
 *.TIFF
 *.RAW
+
+# ===== 例外：result 資料夾內的圖片要保留上傳 =====
+!result/
+!result/**
 
 # ===== Visual Studio 編譯產物 =====
 [Dd]ebug/

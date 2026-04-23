@@ -28,6 +28,8 @@ Partial Class TuneForm
         Me.Ppg_ParameterRecipe = New System.Windows.Forms.PropertyGrid()
         Me.btn_LoadImage = New System.Windows.Forms.Button()
         Me.btn_TestImage = New System.Windows.Forms.Button()
+        Me.lbl_TotalTime = New System.Windows.Forms.Label()
+        Me.lbl_FFTTime = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -64,6 +66,8 @@ Partial Class TuneForm
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.lbl_FFTTime)
+        Me.GroupBox1.Controls.Add(Me.lbl_TotalTime)
         Me.GroupBox1.Controls.Add(Me.Ppg_ParameterRecipe)
         Me.GroupBox1.Controls.Add(Me.btn_LoadImage)
         Me.GroupBox1.Controls.Add(Me.btn_TestImage)
@@ -82,8 +86,29 @@ Partial Class TuneForm
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Ppg_ParameterRecipe.Location = New System.Drawing.Point(9, 175)
         Me.Ppg_ParameterRecipe.Name = "Ppg_ParameterRecipe"
-        Me.Ppg_ParameterRecipe.Size = New System.Drawing.Size(138, 990)
+        Me.Ppg_ParameterRecipe.Size = New System.Drawing.Size(138, 520)
         Me.Ppg_ParameterRecipe.TabIndex = 1
+        '
+        'lbl_TotalTime
+        '
+        Me.lbl_TotalTime.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lbl_TotalTime.Font = New System.Drawing.Font("Microsoft JhengHei UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.lbl_TotalTime.Location = New System.Drawing.Point(6, 705)
+        Me.lbl_TotalTime.Name = "lbl_TotalTime"
+        Me.lbl_TotalTime.Size = New System.Drawing.Size(132, 20)
+        Me.lbl_TotalTime.TabIndex = 2
+        Me.lbl_TotalTime.Text = "總時間: -- ms"
+        '
+        'lbl_FFTTime
+        '
+        Me.lbl_FFTTime.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lbl_FFTTime.Font = New System.Drawing.Font("Microsoft JhengHei UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.lbl_FFTTime.ForeColor = System.Drawing.Color.DarkBlue
+        Me.lbl_FFTTime.Location = New System.Drawing.Point(6, 728)
+        Me.lbl_FFTTime.Name = "lbl_FFTTime"
+        Me.lbl_FFTTime.Size = New System.Drawing.Size(132, 20)
+        Me.lbl_FFTTime.TabIndex = 3
+        Me.lbl_FFTTime.Text = "FFT時間: -- ms"
         '
         'btn_LoadImage
         '
@@ -123,4 +148,6 @@ Partial Class TuneForm
     Friend WithEvents Ppg_ParameterRecipe As PropertyGrid
     Friend WithEvents btn_LoadImage As Button
     Friend WithEvents btn_TestImage As Button
+    Friend WithEvents lbl_TotalTime As Label
+    Friend WithEvents lbl_FFTTime As Label
 End Class
