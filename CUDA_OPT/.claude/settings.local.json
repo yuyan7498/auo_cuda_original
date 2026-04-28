@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where nvcc *)",
+      "Read(//c/Program Files/NVIDIA GPU Computing Toolkit/CUDA//**)",
+      "Bash(\"/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/bin/nvcc.exe\" -ccbin \"C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64\" -I \"C:/Users/toby/Documents/auo_cuda_original/CUDA_OPT/CudaCore/CudaCore\" -I \"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.2/include\" --keep-dir tmpdir -m64 --std=c++17 -Xcompiler \"/EHsc /W3 /nologo /O2\" -allow-unsupported-compiler -DWIN32 -D_WINDOWS -DNDEBUG -c \"C:/Users/toby/Documents/auo_cuda_original/CUDA_OPT/CudaCore/CudaCore/Kernel.cu\" -o /tmp/Kernel.obj)",
+      "PowerShell($nvcc = \"C:\\\\Program Files\\\\NVIDIA GPU Computing Toolkit\\\\CUDA\\\\v13.2\\\\bin\\\\nvcc.exe\"; $cl = \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\VC\\\\Tools\\\\MSVC\\\\14.44.35207\\\\bin\\\\Hostx64\\\\x64\"; $src = \"C:\\\\Users\\\\toby\\\\Documents\\\\auo_cuda_original\\\\CUDA_OPT\\\\CudaCore\\\\CudaCore\\\\Kernel.cu\"; $inc = \"C:\\\\Users\\\\toby\\\\Documents\\\\auo_cuda_original\\\\CUDA_OPT\\\\CudaCore\\\\CudaCore\"; & $nvcc -ccbin $cl -I $inc -m64 --std=c++17 -allow-unsupported-compiler -DWIN32 -D_WINDOWS -DNDEBUG -c $src -o \"$env:TEMP\\\\Kernel.obj\" 2>&1 | Select-String -NotMatch \"warning C4819\" | Select-Object -First 80)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Remove-Item *)"
+    ]
+  }
+}
