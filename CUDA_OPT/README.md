@@ -375,7 +375,7 @@ __global__ void k_InitCheckerPad(src, dst, origW, origH, padW, padH) {
 
 ## 實際執行結果
 
-以下為實機量測結果（同樣輸入影像，連續呼叫兩次）。
+以下為實機量測結果3090ti（同樣輸入影像，連續呼叫兩次）。
 
 ### 原版
 
