@@ -11,7 +11,7 @@
 - [只改了哪些檔案](#只改了哪些檔案)
 - [API 相容性](#api-相容性)
 - [優化詳解](#優化詳解)
-- [效能預估](#效能預估)
+- [實際執行結果](#實際執行結果)
 - [檔案說明](#檔案說明)
 - [已知限制與注意事項](#已知限制與注意事項)
 
@@ -113,7 +113,7 @@ Me.m_CudaCore.CudaExcuteFFT2D(m_AryInput, m_AryOutput, Nothing, Nothing, Nothing
 
 ---
 
-### 1. 自動 smooth-radix padding（最大收益）
+### 1. 自動 smooth-radix padding
 
 **問題**  
 cuFFT 的執行時間對 FFT size 的質因數組成高度敏感：
@@ -220,14 +220,6 @@ cudaMemcpyAsync(s_hBin,  d_binOut,  ..., s_stmCopy);
 cudaMemcpyAsync(s_hMask, d_maskOut, ..., s_stmCopy);
 ```
 
-時間軸變成：
-```
-Compute engine: [ApplyMask][IFFT        ][Normalize]
-DMA engine:               [D2H FFT][D2H Bin][D2H Mask]
-```
-
-IFFT 的時間被 diagnostic D2H 吃掉。
-
 **預期節省：~15 ms/call**
 
 ---
@@ -298,8 +290,6 @@ Atomic 次數：**~150M → ~600K**（256 倍減少）。
 
 ### 7. 跳過 logMag 中間 buffer（兩 trick 併用）
 
-**問題**  
-v2/v3 都存了一塊 `padW × padH` 的 `logMag` 浮點陣列（~600MB）供 ApplyMask 使用。每 pixel 多一次完整 read + write 的 memory traffic。
 
 **Trick A — 以 squared magnitude 做 max reduction**  
 `log(1 + sqrt(x))` 對 x **單調遞增**，所以：
@@ -383,46 +373,35 @@ __global__ void k_InitCheckerPad(src, dst, origW, origH, padW, padH) {
 
 ---
 
-## 效能預估
+## 實際執行結果
 
-以 14192 × 10752 輸入、RTX 3090 Ti 為基準：
+以下為實機量測結果（同樣輸入影像，連續呼叫兩次）。
 
-| 階段 | 原版 | 優化後（第 2 次起） | 節省 |
-|---|---:|---:|---:|
-| cuFFT plan create/destroy | 54 ms | 0 ms | **54 ms** |
-| cudaMalloc / Free | 4-18 ms | 0 ms | **~10 ms** |
-| H2D input | ~5 ms pageable | ~5 ms async | (overlap) |
-| InitChecker | ~1 ms | ~1 ms | — |
-| Forward FFT | **44 ms (Bluestein)** | **15 ms (radix-7)** | **29 ms** |
-| LogMag + Max | ~8 ms atomic storm | ~3 ms warp reduce | **5 ms** |
-| D2H maxVal | ~2 ms sync | 0 ms | **2 ms** |
-| ApplyMask | ~3 ms | ~3 ms | — |
-| Diagnostic D2H (×3) | ~15 ms 序列 | 與 IFFT 重疊 | **15 ms** |
-| Inverse FFT | 44 ms | 15 ms | **29 ms**（已計入 overlap 收益） |
-| Normalize + crop | ~1 ms | ~1 ms | — |
-| D2H output | ~5 ms pageable | ~5 ms async | — |
+### 原版
 
-**粗估**：原版 ~180 ms/call → 優化後 ~40~60 ms/call（第二次起）。  
-**約 3-5 倍加速。**
+![原版執行時間](result/原版時間.png)
 
-**第一次呼叫**另外付出一次性代價：
-- cuFFT plan 建立：~54 ms
-- Pool `cudaMalloc`：~10 ms
-- Pinned buffer `cudaMallocHost`：~100 ms（600 MB 量級）
+- **總時間：4487 ms**
+- **FFT 時間：1344 ms**
 
-合計約 200 ms 的 warmup，之後每次呼叫都享受優化效果。
+### 優化後 — 第一次呼叫（warmup）
 
-### VRAM 使用
+![優化後第一次執行](result/優化後第一次執行.png)
 
-以 14336 × 10752 padded 複數 pipeline 為例：
-- `d_fft`（padded complex）：~1.2 GB
-- `d_stage`（orig float）：~0.6 GB
-- `d_output`（orig float）：~0.6 GB
-- 可選診斷輸出（每個 ~0.6 GB，最多 3 個）
-- cuFFT 內部 workArea：~1.2 GB
-- **合計：約 4~6 GB**（視是否需要 diagnostic 輸出）
+- **總時間：4347 ms**
+- **FFT 時間：1178 ms**
 
-RTX 3090 Ti（24 GB）綽綽有餘。
+第一次呼叫需建立 cuFFT plan、配置 device memory pool、allocate pinned host buffers，屬一次性 warmup 開銷，整體改善幅度有限。
+
+### 優化後 — 第二次呼叫（穩定態）
+
+![優化後第二次執行](result/優化後第二次執行.png)
+
+- **總時間：3939 ms**
+- **FFT 時間：836 ms**
+
+第二次起所有持久資源已就位，FFT 時間由 **1344 ms → 836 ms**，降幅約 **38%**。
+總時間由 **4487 ms → 3939 ms**，降幅約 **12%**（瓶頸已移至 CUDA 以外的 I/O 流程）。
 
 ---
 
@@ -480,14 +459,3 @@ C++/CLI wrapper，把 native C API 包成 .NET class `CudaCore.CudaInterFace`。
 
 6. **相同的 mutex 設計**  
    VB 端的 `Global\MyGpuFFT_Mutex` 保留原樣，多進程同時呼叫時的互斥行為與原版一致。
-
----
-
-## 參考
-
-- 原版位置：`C:\Users\toby\Documents\auo_cuda_original\CUDA_FFT_DLL - 1buffer - mutex\`
-- 之前的優化實驗：`C:\Users\toby\Documents\auo_cuda\src\opt\`
-  - `kernel_opt6`：persistent plan + pool
-  - `kernel_opt8`：pinned host memory
-  - `kernel_v2`：warp reduction + dual-stream overlap + device-resident maxVal
-  - `kernel_v3`：加上 zero-pad（但需外部指定 padding）
